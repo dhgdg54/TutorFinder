@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ <div align="center">
+  <img src="./public/images/logo.png" alt="TutorFinder Platform Logo" width="30%" />
+</div>
 
-## Getting Started
+<div align="center">
+  
+  ![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black?logo=next.js)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?logo=tailwind-css)
+  ![Prisma](https://img.shields.io/badge/Prisma-6.16.2-2D3748?logo=prisma)
+  ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)
+  ![Статус](https://img.shields.io/badge/статус-активный-brightgreen)
+  ![Версия](https://img.shields.io/badge/версия-1.0.0-blue)
+  
+</div>
 
-First, run the development server:
+# TutorFinder Platform
 
+## 📋 Описание
+
+TutorFinder Platform — это современное веб-приложение, которое соединяет студентов (и их родителей) с репетиторами. Платформа предоставляет репетиторам инструменты для создания профилей, управления расписанием и проведения занятий, а студентам — возможность находить подходящих преподавателей, бронировать уроки и отслеживать свой прогресс.
+
+## 🛠️ Необходимые условия
+
+Для работы с проектом потребуется:
+
+- **Node.js 22.14 или новее**
+- **npm / yarn / pnpm**
+- **Docker и Docker Compose** (для базы данных)
+- **Git** для управления версиями
+
+## 📦 Установка и запуск
+
+### 1. Клонирование репозитория
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/tutorfinder-platform.git
+cd tutorfinder-platform
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Установка зависимостей
+```bash
+npm install
+# или
+yarn install
+# или
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Настройка окружения
+Создайте файл `.env` в корневой директории:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+DATABASE_URL="mysql://myuser:mypassword@localhost:3306/myapp"
+```
 
-## Learn More
+### 4. Запуск базы данных в Docker
+```bash
+docker-compose up -d
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Настройка базы данных
+```bash
+# Генерация Prisma клиента
+npx prisma generate
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Применение миграций
+npx prisma db push
+# или
+npx prisma migrate dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 6. Запуск приложения
+```bash
+# Development режим
+npm run dev
+# или
+yarn dev
+# или
+pnpm dev
 
-## Deploy on Vercel
+# Production сборка
+npm run build
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Приложение будет доступно по адресу: [http://localhost:3000](http://localhost:3000)  
+> phpMyAdmin будет доступен по адресу: [http://localhost:8080](http://localhost:8080)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🐳 Docker Compose
+
+Проект использует `Docker Compose` для запуска MySQL и phpMyAdmin:
+
+```yaml
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-dev
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-dev
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+```
+
+## 🚀 Скрипты
+
+| Команда             | Назначение |
+|---------------------|----------|
+| `npm run dev`       | Запуск development сервера |
+| `npm run build`     | Сборка production версии |
+| `npm run start`     | Запуск production сервера |
+| `npm run lint`      | Проверка кода с ESLint |
+
+## 📞 Контакты
+
+GitHub: [@your-username](https://github.com/your-username)
+
+<div align="center"> <sub>Создано для улучшения качества образования через технологии</sub> </div>
