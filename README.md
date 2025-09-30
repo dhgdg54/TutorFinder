@@ -134,6 +134,6 @@ volumes:
 
 ## 📞 Контакты
 
-GitHub: [@your-username](https://github.com/your-username)
+GitHub: [@dhgdg54](https://github.com/your-username)
 
 <div align="center"> <sub>Создано для улучшения качества образования через технологии</sub> </div>
